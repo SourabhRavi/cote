@@ -8,7 +8,7 @@ function Navbar() {
             <nav className="navbar navbar-expand-lg sticky-top">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/" style={{ color: "#fff" }}>
-                        <img src={logo} alt="Logo" width="30" height="24" class="d-inline-block align-text-top me-3"></img>Cote</a>
+                        <img src={logo} alt="Logo" width="30" height="24" className="d-inline-block align-text-top me-3"></img>Cote</a>
                     <SignOut />
                 </div>
             </nav>

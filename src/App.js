@@ -76,7 +76,7 @@ function ChatRoom() {
   return (
     <>
       <Navbar />
-      <div className='container mt-4'>
+      <div className='container mt-4 chatroom-wrap'>
         {messages && messages.map((msg, id) => { return <ChatMessage key={id} message={msg} /> })}
       </div>
 
