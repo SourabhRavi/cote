@@ -31,16 +31,10 @@ function App() {
   );
 }
 
-function SignOut() {
-
-  return auth.currentUser && (
-    <button onClick={() => { auth.signOut() }} type="button" className="btn btn-danger">Sign Out</button>
-  )
-}
-
 function ChatRoom() {
+
   const messagesRef = firestore.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(30);
+  const query = messagesRef.orderBy('createdAt');
 
   const [messages] = useCollectionData(query, { idField: 'id' });
 
@@ -49,14 +43,7 @@ function ChatRoom() {
 
   function sendMessage(e) {
     e.preventDefault();
-    const timeStamp = firebase.firestore.Timestamp.now();
-    // console.log(timeStamp);
-    // console.log(firebase.firestore.FieldValue.serverTimestamp().toDate());
-    // console.log(firebase.firestore.FieldValue.serverTimestamp().toDate().getDate());
-    // console.log(firebase.firestore.FieldValue.serverTimestamp().toDate().getMonth() + 1);
-    // console.log(firebase.firestore.FieldValue.serverTimestamp().toDate().getFullYear());
-    // console.log(firebase.firestore.FieldValue.serverTimestamp().toDate().toLocaleTimeString());
-    console.log(timeStamp);//timestamp to store the time when messsage is sent
+
     const sendInBg = async () => {
       const { uid, photoURL } = auth.currentUser;
 
@@ -66,8 +53,8 @@ function ChatRoom() {
         uid,
         photoURL
       });
-
     }
+
     setFormValue('');
 
     return sendInBg();
@@ -76,11 +63,16 @@ function ChatRoom() {
   return (
     <>
       <Navbar />
-      <div className='container mt-4 chatroom-wrap'>
-        {messages && messages.map((msg, id) => { return <ChatMessage key={id} message={msg} /> })}
+      <div className='container mt-3 chatroom-wrap' id='chat'>
+        {messages ? messages.map((msg, id) => { return <ChatMessage key={id} message={msg} /> }) : <p className='placeholder-wave'><span className='placeholder col-12 bg-primary' style={{
+          padding: "10px", borderTopRightRadius: "40px",
+          borderTopLeftRadius: "40px",
+          borderBottomRightRadius: "40px",
+          maxWidth: "max-content", color: "#fff"
+        }}>Loading messages...</span></p>}
       </div>
 
-      <form onSubmit={sendMessage}>
+      <form id='form' onSubmit={sendMessage}>
         <div className="message-input-wrap">
           <input type="text" value={formValue} onChange={(e) => { setFormValue(e.target.value) }} placeholder='Type your message...' />
           <button type="submit" className="message-send-btn" disabled={!formValue}>Send</button>
@@ -89,7 +81,6 @@ function ChatRoom() {
     </>
   )
 }
-
 
 
 export default App;

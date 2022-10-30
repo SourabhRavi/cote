@@ -7,7 +7,7 @@ function ChatMessage(props) {
 
     return (
         <>
-            <div className={`message ${messageClass}`}>
+            <div onLoad={() => { window.scrollTo(0, document.body.scrollHeight) }} className={`message ${messageClass}`}>
                 <p className='message-text'>{text}</p>
                 <img className='profile-photo' src={photoURL} style={{ height: "25px", width: "25px" }} alt="" />
             </div>
